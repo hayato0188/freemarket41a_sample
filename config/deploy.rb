@@ -2,7 +2,7 @@
 lock "~> 3.11.0"
 
 set :application, "freemarket41a_sample"
-set :repo_url, "git@github.com:nanashimada/freemarket41a_sample.git"
+set :repo_url, "git@github.com:hayato0188/freemarket41a_sample.git"
 
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
@@ -10,7 +10,7 @@ set :rbenv_type, :user
 set :rbenv_ruby, '2.3.1'
 
 set :ssh_options, auth_methods: ['publickey'],
-                  keys: ['/Users/shimadanana/.ssh/shimada.pem']
+                  keys: ['~/.ssh/sentokun.pem']
 
 set :unicorn_pid, -> { "#{shared_path}/tmp/pids/unicorn.pid" }
 set :unicorn_config_path, -> { "#{current_path}/config/unicorn.rb" }
