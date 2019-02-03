@@ -33,7 +33,6 @@ Rails.application.routes.draw do
         get :detail
         get :transaction
         post :pay, controller: :credits, action: :pay, as: 'pay'
-        patch :destroy
       end
 
     end

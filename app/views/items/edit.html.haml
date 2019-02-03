@@ -44,6 +44,7 @@
                       = fa_icon "angle-down", class:'icon'
                     .select-wrapper.midium_category
                     .select-wrapper.small_category
+                  = render partial: "partial/forms/select-form", locals:{ label_name:"商品の状態", column: :item_condition, selects: Item.item_conditions.keys.map {|k| [Item.item_conditions_i18n[k], k]}, f: f}
             .common-container-inner__content
               %h3.common-container-inner__content-head 配送について
               .common-container-inner__content-box
@@ -83,8 +84,8 @@
                 %p 禁止されている出品、行為を必ずご確認ください。
                 %p またブランド品でシリアルナンバー等がある場合はご記載ください。偽ブランドの販売は犯罪であり処罰される可能性があります。
                 %p また、出品を持ちまして加盟店規約に同意したことになります。
-              = f.hidden_field :status, {value: "出品中"}
-              = f.submit '変更する', class: 'btn-red'
-              = link_to 'キャンセル',root_path, class: "btn-gray"
+                = f.hidden_field :status, {value: "exhibition"}
+                = f.submit '変更する', class: 'btn-red'
+                = link_to 'キャンセル',root_path, class: "btn-gray"
 
   = render 'devise/shared/footer'
