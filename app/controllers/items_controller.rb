@@ -4,6 +4,8 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :destroy]
   before_action :move_to_login, only: [:new, :destroy, :transaction]
   before_action :set_params, only: [:advanced_search]
+  before_action :set_api_key, only: [:transaction]
+  before_action :set_card_token, only: [:transaction]
 
   def index
     @ladies_items = Item.with_category.search_status('exhibition').where('large_category = 1').order('updated_at': "DESC").limit(4)
@@ -108,6 +110,8 @@ class ItemsController < ApplicationController
 
   def transaction
     @item = Item.find(params[:id])
+    customer = Payjp::Customer.retrieve(@customer_token)
+    @card = customer.cards.first
   end
 
 
@@ -141,7 +145,7 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:name, :item_condition, :image, :description, :status, :ship_from, :delivery_fee, :pre_date, :user_id, value_attributes: [:id, :item_id, :price, :profit], parent_category_attributes: [:id, :large_category, :midium_category, :small_category]).merge(user_id: current_user.id)
   end
   def search_params
-    params.require(:q).permit(:value_price_gteq, :value_price_lteq, :parent_category_large_category_eq, :parent_category_midium_category_eq, :parent_category_small_category_eq, :item_condition_in)
+    params.require(:q).permit(:name_cont, :value_price_gteq, :value_price_lteq, :parent_category_large_category_eq, :parent_category_midium_category_eq, :parent_category_small_category_eq, :item_condition_in)
   end
 
   def link_user
@@ -150,6 +154,14 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def set_api_key
+    Payjp.api_key = Rails.application.secrets.PAYJP_SECRET_KEY
+  end
+
+  def set_card_token
+    @customer_token = current_user.credit.customer_id
   end
 
   def set_params

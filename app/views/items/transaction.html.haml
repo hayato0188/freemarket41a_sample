@@ -57,10 +57,11 @@
       .transaction-content-inner
         支払い方法
         .transaction-user-info-text
-          ************8704
+          = "************#{@card.last4}"
           %br
-          01/01
+          = "#{@card.exp_month}/#{@card.exp_year}"
           %br
+          = "#{@card.brand}"
         %a.transaction-user-info-fix.credit-info{:href => "/"}
           %span 変更する
           %i.fas.fa-arrow-right
